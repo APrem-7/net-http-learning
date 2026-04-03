@@ -37,8 +37,8 @@ func (a *api) getPostsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	u := User{
-		first_name: payload.first_name,
-		last_name:  payload.last_name,
+		FirstName: payload.FirstName,
+		LastName:  payload.LastName,
 	}
 	if err := InsertUser(u); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -49,14 +49,14 @@ func (a *api) getPostsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func InsertUser(u User) error {
-	if u.first_name == "" {
+	if u.FirstName == "" {
 		return errors.New("first_name cannot be empty")
 	}
-	if u.last_name == "" {
+	if u.LastName == "" {
 		return errors.New("last_name cannot be empty")
 	}
 	for _, user := range users {
-		if u.first_name == user.first_name && u.last_name == user.last_name {
+		if u.FirstName == user.FirstName && u.LastName == user.LastName {
 			return errors.New("user already exists")
 		}
 
