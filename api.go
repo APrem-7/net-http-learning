@@ -10,7 +10,7 @@ type api struct {
 	addr string
 }
 
-var users = []Users{}
+var users = []User{}
 
 func (a *api) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Write(([]byte("Hello From the index page")))
