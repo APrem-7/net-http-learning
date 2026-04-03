@@ -40,7 +40,11 @@ func (a *api) getPostsHandler(w http.ResponseWriter, r *http.Request) {
 		first_name: payload.first_name,
 		last_name:  payload.last_name,
 	}
-	InsertUser(u)
+	if err := InsertUser(u); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+
+	}
 	w.WriteHeader(http.StatusOK)
 }
 
