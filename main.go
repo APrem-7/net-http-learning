@@ -9,8 +9,14 @@ type api struct {
 	addr string
 }
 
-func (s *api) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (a *api) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Write(([]byte("Hello From the index page")))
+}
+func (a *api) getUsersHandler(w http.ResponseWriter, r *http.Request) {
+	w.Write(([]byte("Hello From the users page")))
+}
+func (a *api) getPostsHandler(w http.ResponseWriter, r *http.Request) {
+	w.Write(([]byte("Hello From the posts page")))
 }
 
 func main() {
@@ -23,9 +29,9 @@ func main() {
 		Handler: mux,
 	}
 
-	mux.HandleFunc("GET /users", api.getUsersHandler) //still not implenented
-	mux.HandleFunc("GET /posts", api.getPostsHandler) //still not implemetned
-	if err := http.ListenAndServe(s.Addr, api); err != nil {
+	mux.HandleFunc("GET /users", api.getUsersHandler)
+	mux.HandleFunc("GET /posts", api.getPostsHandler)
+	if err := http.ListenAndServe(s.Addr, mux); err != nil {
 		log.Fatal("error")
 	}
 
