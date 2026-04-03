@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 )
 
@@ -40,7 +41,17 @@ func (a *api) getPostsHandler(w http.ResponseWriter, r *http.Request) {
 		last_name:  payload.last_name,
 	}
 
-	users.append(u)
+	users = append(users, u)
 
 	w.WriteHeader(http.StatusOK)
+}
+
+func InsertUser(u User) error {
+	if u.first_name == "" {
+		return errors.New("first_name cannot be empty")
+	}
+	if u.last_name == "" {
+		return errors.New("last_name cannot be empty")
+	}
+	return nil
 }
