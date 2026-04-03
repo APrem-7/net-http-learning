@@ -10,7 +10,23 @@ type api struct {
 }
 
 func (s *api) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	w.Write(([]byte("Hello From the server")))
+	switch r.Method {
+
+	case http.MethodGet:
+		switch r.URL.Path {
+		case "/":
+			w.Write(([]byte("Hello From the index page")))
+			return
+		case "/users":
+			w.Write(([]byte("Hello From the users page")))
+			return
+		case "posts":
+			w.Write(([]byte("Hello From the posts page")))
+			return
+		}
+	default:
+		w.Write(([]byte("Hello From the 404 page")))
+	}
 }
 func main() {
 	api := &api{
