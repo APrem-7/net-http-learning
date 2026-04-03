@@ -1,6 +1,9 @@
 package main
 
-import "net/http"
+import (
+	"log"
+	"net/http"
+)
 
 type server struct {
 	addr string
@@ -13,6 +16,8 @@ func main() {
 	s := &server{
 		addr: ":8080",
 	}
-	http.ListenAndServe(s.addr, s)
+	if err := http.ListenAndServe(s.addr, s); err != nil {
+		log.Fatal("error")
+	}
 
 }
